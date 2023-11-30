@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping(value = {"", "/", "home"})
-    public String displayHomePage(Model model) {
-        // Model interface: container between UI and backend
-        model.addAttribute("username", "Jane Doe");
+    public String displayHomePage() {
         return "home.html";
     }
 }
