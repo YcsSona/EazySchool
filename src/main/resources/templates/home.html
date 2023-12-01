@@ -3,7 +3,7 @@ Author: W3layouts
 Author URL: http://w3layouts.com
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags -->
@@ -17,50 +17,8 @@ Author URL: http://w3layouts.com
 </head>
 
 <body>
-<!-- header -->
-<header id="site-header" class="fixed-top">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand"><i class="fas fa-graduation-cap"></i>Eazy School
-            </a>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
-                <span class="navbar-toggler-icon fa icon-close fa-times"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Courses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- toggle switch for light and dark theme -->
-            <div class="cont-ser-position">
-                <nav class="navigation">
-                    <div class="theme-switch-wrapper">
-                        <label class="theme-switch" for="checkbox">
-                            <input type="checkbox" id="checkbox">
-                            <div class="mode-container">
-                                <i class="gg-sun"></i>
-                                <i class="gg-moon"></i>
-                            </div>
-                        </label>
-                    </div>
-                </nav>
-            </div>
-            <!-- //toggle switch for light and dark theme -->
-        </nav>
-    </div>
-</header>
-<!-- //header -->
+
+<div th:replace="header :: header"></div>
 
 <!-- banner section -->
 <section id="home" class="w3l-banner py-5">
@@ -235,51 +193,51 @@ Author URL: http://w3layouts.com
                     <ul>
                         <li class="anim1">
                             <img src="assets/images/testi1.jpg" class="img-fluid rounded-circle"
-                                 alt="client image" />
+                                 alt="client image"/>
                             <blockquote class="quote"><q>I am very happy that my son is studying in the
                                 Eazy school. The support provided by the teachers is great and the curriculum
                                 that they follow is of international standards.
-                            </q> </blockquote>
+                            </q></blockquote>
                             <div class="source">- Mario Spe</div>
                         </li>
 
                         <li class="anim2">
                             <img src="assets/images/testi2.jpg" class="img-fluid rounded-circle"
-                                 alt="client image" />
+                                 alt="client image"/>
                             <blockquote class="quote"><q>My child never felt pressure of studies in
                                 the Eazy School. He is always encouraged to follow his own interest
                                 and the school provides wide variety of programs for the students
                                 outside studies.
-                            </q> </blockquote>
+                            </q></blockquote>
                             <div class="source">- Petey Cru</div>
                         </li>
                         <li class="anim3">
                             <img src="assets/images/testi3.jpg" class="img-fluid rounded-circle "
-                                 alt="client image" />
+                                 alt="client image"/>
                             <blockquote class="quote"><q>Loved the infrastructure and cleanly
                                 environment that school maintains. This is very important
                                 in the current pandemic situations.
-                            </q> </blockquote>
+                            </q></blockquote>
                             <div class="source">- Anna Sth</div>
                         </li>
                         <li class="anim4">
                             <img src="assets/images/testi1.jpg" class="img-fluid rounded-circle"
-                                 alt="client image" />
+                                 alt="client image"/>
                             <blockquote class="quote"><q>With the help of Cambridge
                                 authorized programs, teachers always
                                 enhancing my child classroom experiences
                                 by applying new ideas & approaches.
-                            </q> </blockquote>
+                            </q></blockquote>
                             <div class="source">- Gail For</div>
                         </li>
                         <li class="anim5">
                             <img src="assets/images/testi2.jpg" class="img-fluid rounded-circle"
-                                 alt="client image" />
+                                 alt="client image"/>
                             <blockquote class="quote"><q>Eazy Schools supports both online and offline
                                 classes based on the pandemic conditions to make sure that there is
                                 no impact on the children studies. School staff always does their
                                 best to accommodate parents request.
-                            </q> </blockquote>
+                            </q></blockquote>
                             <div class="source">- Boye Fra</div>
                         </li>
                     </ul>
@@ -301,7 +259,7 @@ Author URL: http://w3layouts.com
             <div class="col-lg-4 col-md-6">
                 <div class="coursecard-single">
                     <div class="grids5-info position-relative">
-                        <img src="assets/images/c1.jpg" alt="" class="img-fluid" />
+                        <img src="assets/images/c1.jpg" alt="" class="img-fluid"/>
                         <div class="meta-list">
                             <a>Education</a>
                         </div>
@@ -309,8 +267,8 @@ Author URL: http://w3layouts.com
                     <div class="content-main-top">
                         <div class="content-top mb-4 mt-3">
                             <ul class="list-unstyled d-flex align-items-center justify-content-between">
-                                <li> <i class="fas fa-book-open"></i> 43 Lesson</li>
-                                <li> <i class="fas fa-star"></i> 4.9</li>
+                                <li><i class="fas fa-book-open"></i> 43 Lesson</li>
+                                <li><i class="fas fa-star"></i> 4.9</li>
                             </ul>
                         </div>
                         <h4><a>Educational Programs</a></h4>
@@ -322,7 +280,7 @@ Author URL: http://w3layouts.com
             <div class="col-lg-4 col-md-6 mt-md-0 mt-4">
                 <div class="coursecard-single">
                     <div class="grids5-info position-relative">
-                        <img src="assets/images/c2.jpg" alt="" class="img-fluid" />
+                        <img src="assets/images/c2.jpg" alt="" class="img-fluid"/>
                         <div class="meta-list">
                             <a class="sec-2">Meditation</a>
                         </div>
@@ -330,8 +288,8 @@ Author URL: http://w3layouts.com
                     <div class="content-main-top">
                         <div class="content-top mb-4 mt-3">
                             <ul class="list-unstyled d-flex align-items-center justify-content-between">
-                                <li> <i class="fas fa-book-open"></i> 72 Lesson</li>
-                                <li> <i class="fas fa-star"></i> 4.6</li>
+                                <li><i class="fas fa-book-open"></i> 72 Lesson</li>
+                                <li><i class="fas fa-star"></i> 4.6</li>
                             </ul>
                         </div>
                         <h4><a>Best Meditation Classes</a></h4>
@@ -343,7 +301,7 @@ Author URL: http://w3layouts.com
             <div class="col-lg-4 col-md-6 mt-lg-0 mt-4">
                 <div class="coursecard-single">
                     <div class="grids5-info position-relative">
-                        <img src="assets/images/c3.jpg" alt="" class="img-fluid" />
+                        <img src="assets/images/c3.jpg" alt="" class="img-fluid"/>
                         <div class="meta-list">
                             <a class="sec-3">Games</a>
                         </div>
@@ -351,8 +309,8 @@ Author URL: http://w3layouts.com
                     <div class="content-main-top">
                         <div class="content-top mb-4 mt-3">
                             <ul class="list-unstyled d-flex align-items-center justify-content-between">
-                                <li> <i class="fas fa-book-open"></i> 14 Lesson</li>
-                                <li> <i class="fas fa-star"></i> 5.0</li>
+                                <li><i class="fas fa-book-open"></i> 14 Lesson</li>
+                                <li><i class="fas fa-star"></i> 5.0</li>
                             </ul>
                         </div>
                         <h4><a>Games Program in a Week</a></h4>
@@ -392,56 +350,7 @@ Author URL: http://w3layouts.com
 </section>
 <!-- //call block -->
 
-<!-- footer block -->
-<footer class="w3l-footer-29-main">
-    <div class="footer-29 pt-5 pb-4">
-        <div class="container pt-md-4">
-            <div class="row footer-top-29">
-                <div class="col-lg-4 col-md-6 footer-list-29">
-                    <h6 class="footer-title-29">Contact Info </h6>
-                    <p class="mb-2 pe-xl-5">Address : Eazy School, 10001, 5th Avenue, #06 lane street, NY - 62617.
-                    </p>
-                    <p class="mb-2">Phone Number : <a href="tel:+1(21) 234 4567">+1(21) 673 4587</a></p>
-                    <p class="mb-2">Email : <a href="mailto:info@eazyschool.com">info@eazyschool.com</a></p>
-                </div>
-                <div class="col-lg-2 col-md-3 col-6 footer-list-29 mt-md-0 mt-4">
-                    <ul>
-                        <h6 class="footer-title-29">Quick Links</h6>
-                        <li><a>About Us</a></li>
-                        <li><a>Courses</a></li>
-                        <li><a>Become a Teacher</a></li>
-                        <li><a>Contact Us</a></li>
-                        <li><a>Career</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-md-3 col-6 ps-lg-5 ps-lg-4 footer-list-29 mt-md-0 mt-4">
-                    <ul>
-                        <h6 class="footer-title-29">Explore</h6>
-                        <li><a>Blog Posts</a></li>
-                        <li><a>Privacy policy</a></li>
-                        <li><a>Contact Us</a></li>
-                        <li><a>License & uses</a></li>
-                        <li><a>Courses</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-8 footer-list-29 mt-lg-0 mt-4 ps-lg-5">
-                    <h6 class="footer-title-29">Subscribe</h6>
-                    <form action="#" class="subscribe d-flex" method="post">
-                        <input type="email" name="email" placeholder="Email Address" required="">
-                        <button class="button-style"><span class="fa fa-paper-plane"
-                                                           aria-hidden="true"></span></button>
-                    </form>
-                    <p class="mt-3">Subscribe to our mailing list and get updates to your email inbox.</p>
-                </div>
-            </div>
-            <!-- copyright -->
-            <p class="copy-footer-29 text-center pt-lg-2 mt-5 pb-2">© 2023 Eazy School. All rights reserved. Design
-                by <a href="https://w3layouts.com/" target="_blank">W3Layouts</a></p>
-            <!-- //copyright -->
-        </div>
-    </div>
-</footer>
-<!-- //footer block -->
+<div th:replace="footer :: footer"></div>
 
 <!-- Js scripts -->
 <!-- move top -->
