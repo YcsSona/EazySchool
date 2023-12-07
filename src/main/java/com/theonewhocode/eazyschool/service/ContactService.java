@@ -29,4 +29,9 @@ public class ContactService {
     public List<Contact> findMsgsWithOpenStatus() {
         return contactRepository.findMsgsWithStatus(EazySchoolConstansts.OPEN);
     }
+
+    public boolean updateMsgStatus(int contactId, String updatedBy) {
+        int result = contactRepository.updateMsgStatus(contactId, EazySchoolConstansts.CLOSE, updatedBy);
+        return result > 0;
+    }
 }
