@@ -1,7 +1,6 @@
 package com.theonewhocode.eazyschool.config;
 
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -21,8 +20,7 @@ public class SecurityConfig {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
 
-        http.csrf((csrf) -> csrf.ignoringRequestMatchers(mvcMatcherBuilder.pattern("/saveMsg"))
-                        .ignoringRequestMatchers(PathRequest.toH2Console()))
+        http.csrf((csrf) -> csrf.ignoringRequestMatchers(mvcMatcherBuilder.pattern("/saveMsg")))
                 .authorizeHttpRequests((requests) -> requests.requestMatchers(mvcMatcherBuilder.pattern("/dashboard")).authenticated()
                         .requestMatchers(mvcMatcherBuilder.pattern("/displayMessages")).hasRole("ADMIN")
                         .requestMatchers(mvcMatcherBuilder.pattern("/closeMsg/**")).hasRole("ADMIN")
@@ -36,16 +34,12 @@ public class SecurityConfig {
                         .requestMatchers(mvcMatcherBuilder.pattern("/about")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/assets/**")).permitAll()
                         .requestMatchers(mvcMatcherBuilder.pattern("/login")).permitAll()
-                        .requestMatchers(mvcMatcherBuilder.pattern("/logout")).permitAll()
-                        .requestMatchers(PathRequest.toH2Console()).permitAll())
+                        .requestMatchers(mvcMatcherBuilder.pattern("/logout")).permitAll())
                 .formLogin(loginConfigurer -> loginConfigurer.loginPage("/login")
                         .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll())
                 .logout(logoutConfigurer -> logoutConfigurer.logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true).permitAll())
                 .httpBasic(Customizer.withDefaults());
-
-        http.headers(headersConfigurer -> headersConfigurer
-                .frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
 
         return http.build();
     }
