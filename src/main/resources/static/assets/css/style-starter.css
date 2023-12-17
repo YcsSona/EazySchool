@@ -21541,7 +21541,37 @@ label {
   margin: 50px;
 }
 
+.table-responsive-class {
+  margin: auto;
+  width: 50% !important;
+}
+
 .control-label:after {
     content: "*";
     color: red;
+}
+
+.close:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+
+.modal-header .close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+}
+
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
 }
