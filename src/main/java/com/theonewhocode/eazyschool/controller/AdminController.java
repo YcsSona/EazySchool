@@ -1,7 +1,9 @@
 package com.theonewhocode.eazyschool.controller;
 
+import com.theonewhocode.eazyschool.model.Courses;
 import com.theonewhocode.eazyschool.model.EazyClass;
 import com.theonewhocode.eazyschool.model.Person;
+import com.theonewhocode.eazyschool.repository.CoursesRepository;
 import com.theonewhocode.eazyschool.repository.EazyClassRepository;
 import com.theonewhocode.eazyschool.repository.PersonRepository;
 import jakarta.servlet.http.HttpSession;
@@ -28,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private CoursesRepository coursesRepository;
 
     @RequestMapping("/displayClasses")
     public ModelAndView displayClasses() {
@@ -119,6 +124,34 @@ public class AdminController {
 
 
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayStudents?classId=" + eazyClass.getClassId());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/displayCourses", method = RequestMethod.GET)
+    public ModelAndView displayCourses() {
+        List<Courses> courses = coursesRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("courses_secure.html");
+        modelAndView.addObject("courses", courses);
+        modelAndView.addObject("course", new Courses());
+        return modelAndView;
+    }
+
+    @RequestMapping("/addNewCourse")
+    public String addNewCourse(@ModelAttribute("course") Courses course) {
+        coursesRepository.save(course);
+        return "redirect:/admin/displayCourses";
+    }
+
+    @RequestMapping("/viewStudents")
+    public ModelAndView viewStudents(@RequestParam int id) {
+        ModelAndView modelAndView = new ModelAndView("courses_students.html");
+
+        Optional<Courses> courseOptional = coursesRepository.findById(id);
+        courseOptional.ifPresent(courses -> {
+            modelAndView.addObject("courses", courses);
+            modelAndView.addObject("person", new Person());
+        });
+
         return modelAndView;
     }
 }
