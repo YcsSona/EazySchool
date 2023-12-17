@@ -3,12 +3,15 @@ package com.theonewhocode.eazyschool.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+// Use getters and setters to avoid StackOverFlow error caused by called toString() methods as we are using mappings
+@Getter
+@Setter
 @Entity
 @Table(name = "class")
 public class EazyClass extends BaseEntity {

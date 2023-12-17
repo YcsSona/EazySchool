@@ -1,8 +1,10 @@
 package com.theonewhocode.eazyschool.controller;
 
 import com.theonewhocode.eazyschool.model.EazyClass;
+import com.theonewhocode.eazyschool.model.Person;
 import com.theonewhocode.eazyschool.repository.EazyClassRepository;
 import com.theonewhocode.eazyschool.repository.PersonRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +59,66 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/displayStudents", method = RequestMethod.GET)
-    public ModelAndView displayStudents(@RequestParam int classId) {
+    public ModelAndView displayStudents(@RequestParam int classId,
+                                        @RequestParam(value = "error", required = false) String error,
+                                        HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("students.html");
+
+        Optional<EazyClass> optionalEazyClass = eazyClassRepository.findById(classId);
+        optionalEazyClass.ifPresent(eazyClass -> {
+            modelAndView.addObject("eazyClass", eazyClass);
+            // Required when admin is adding new students details
+            session.setAttribute("eazyClass", eazyClass);
+        });
+
+        modelAndView.addObject("person", new Person());
+
+        if (error != null) {
+            modelAndView.addObject("errorMessage", "Invalid Email entered!!");
+        }
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
+    // Do not use @Valid annotation to avoid validation related errors on Person entity
+    public ModelAndView addStudent(@ModelAttribute("person") Person person, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        EazyClass eazyClass = (EazyClass) session.getAttribute("eazyClass");
+        Person personEntity = personRepository.readByEmail(person.getEmail());
+
+        if (personEntity == null || !(personEntity.getPersonId() > 0)) {
+            modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + eazyClass.getClassId() + "&error=true");
+            return modelAndView;
+        }
+
+        // Link class with person
+        personEntity.setEazyClass(eazyClass);
+        personRepository.save(personEntity);
+
+        // Link person with class
+        eazyClass.getPersons().add(personEntity);
+        eazyClassRepository.save(eazyClass);
+
+        modelAndView.setViewName("redirect:/admin/displayStudents?classId=" + eazyClass.getClassId());
+        return modelAndView;
+    }
+
+    @RequestMapping("/deleteStudent")
+    public ModelAndView deleteStudent(@RequestParam int personId, HttpSession session) {
+        EazyClass eazyClass = (EazyClass) session.getAttribute("eazyClass");
+
+        Optional<Person> optionalPerson = personRepository.findById(personId);
+        optionalPerson.ifPresent(person -> {
+            person.setEazyClass(null);
+            eazyClass.getPersons().remove(person);
+            EazyClass eazyClassSaved = eazyClassRepository.save(eazyClass);
+            session.setAttribute("eazyClass", eazyClassSaved);
+        });
+
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayStudents?classId=" + eazyClass.getClassId());
         return modelAndView;
     }
 }
