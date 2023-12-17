@@ -65,7 +65,7 @@ public class AdminController {
 
     @RequestMapping(value = "/displayStudents", method = RequestMethod.GET)
     public ModelAndView displayStudents(@RequestParam int classId,
-                                        @RequestParam(value = "error", required = false) String error,
+                                        @RequestParam(required = false) String error,
                                         HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("students.html");
 
@@ -143,15 +143,46 @@ public class AdminController {
     }
 
     @RequestMapping("/viewStudents")
-    public ModelAndView viewStudents(@RequestParam int id) {
+    public ModelAndView viewStudents(@RequestParam int id,
+                                     @RequestParam(required = false) String error,
+                                     HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("courses_students.html");
 
         Optional<Courses> courseOptional = coursesRepository.findById(id);
         courseOptional.ifPresent(courses -> {
             modelAndView.addObject("courses", courses);
             modelAndView.addObject("person", new Person());
+            session.setAttribute("courses", courses);
         });
 
+        if (error != null) {
+            modelAndView.addObject("errorMessage", "Invalid Email entered!!");
+        }
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/addStudentToCourse", method = RequestMethod.POST)
+    public ModelAndView addStudentToCourse(@ModelAttribute("person") Person person, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+        // Fetch current course details to link with person
+        Courses courses = (Courses) session.getAttribute("courses");
+
+        Person personEntity = personRepository.readByEmail(person.getEmail());
+        if (personEntity == null || !(personEntity.getPersonId() > 0)) {
+            modelAndView.setViewName("redirect:/admin/viewStudents?id=" + courses.getCourseId() + "&error=true");
+            return modelAndView;
+        }
+
+        // Link course to person
+        personEntity.getCourses().add(courses);
+
+        // Link person to course
+        courses.getPersons().add(personEntity);
+        personRepository.save(personEntity);
+
+        session.setAttribute("courses", courses);
+        modelAndView.setViewName("redirect:/admin/viewStudents?id=" + courses.getCourseId());
         return modelAndView;
     }
 }
