@@ -22,6 +22,11 @@ public class DashboardController {
         // setting name from the fetched entity from the DB
         model.addAttribute("username", person.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
+
+        if (person.getEazyClass() != null && person.getEazyClass().getName() != null) {
+            model.addAttribute("enrolledClass", person.getEazyClass().getName());
+        }
+
         session.setAttribute("loggedInPerson", person);
 
         return "dashboard.html";
