@@ -1,10 +1,13 @@
 package com.theonewhocode.eazyschool.rest;
 
 import com.theonewhocode.eazyschool.model.Contact;
+import com.theonewhocode.eazyschool.model.Response;
 import com.theonewhocode.eazyschool.repository.ContactRepository;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,5 +31,15 @@ public class ContactRestController {
             return contactRepository.findByStatus(contact.getStatus());
         }
         return List.of();
+    }
+
+    @PostMapping("/saveMsg")
+    public ResponseEntity<?> saveMsg(@RequestHeader String invocationFrom,
+                                     @Valid @RequestBody Contact contact) {
+        log.info(String.format("Header invocationFrom = %s", invocationFrom));
+        contactRepository.save(contact);
+
+        Response response = new Response("200", "Message saved successfully!");
+        return ResponseEntity.status(HttpStatus.CREATED).header("isMsgSaved", "true").body(response);
     }
 }
