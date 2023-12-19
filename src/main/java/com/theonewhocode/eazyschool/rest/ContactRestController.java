@@ -1,5 +1,6 @@
 package com.theonewhocode.eazyschool.rest;
 
+import com.theonewhocode.eazyschool.constants.EazySchoolConstansts;
 import com.theonewhocode.eazyschool.model.Contact;
 import com.theonewhocode.eazyschool.model.Response;
 import com.theonewhocode.eazyschool.repository.ContactRepository;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -58,6 +60,25 @@ public class ContactRestController {
         }
 
         Response response = new Response("200", "Message deleted successfully!");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PatchMapping("/closeMsg") // partial update
+    public ResponseEntity<?> closeMsg(@RequestBody Contact contact) {
+        Response response = new Response();
+
+        Optional<Contact> contactOptional = contactRepository.findById(contact.getContactId());
+        if (contactOptional.isPresent()) {
+            contactOptional.get().setStatus(EazySchoolConstansts.CLOSE);
+            contactRepository.save(contactOptional.get());
+        } else {
+            response.setStatusCode("400");
+            response.setStatusMsg("Invalid Contact ID received!!!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        response.setStatusCode("200");
+        response.setStatusMsg("Message closed successfully!");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
