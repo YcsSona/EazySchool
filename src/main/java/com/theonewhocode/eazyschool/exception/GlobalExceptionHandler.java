@@ -1,5 +1,6 @@
 package com.theonewhocode.eazyschool.exception;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,7 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 exceptions across the whole application in one global handling component. It can be viewed
 as an interceptor of exceptions thrown by methods annotated with @RequestMapping and similar.
 * */
-@ControllerAdvice
+
+// annotations = Controller.class : works on the classes annotated with @Controller thus by restricting it over Rest controller
+@ControllerAdvice(annotations = Controller.class)
 public class GlobalExceptionHandler {
 
     /*
