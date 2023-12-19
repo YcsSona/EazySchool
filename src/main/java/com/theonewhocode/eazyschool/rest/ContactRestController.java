@@ -6,7 +6,9 @@ import com.theonewhocode.eazyschool.repository.ContactRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +43,21 @@ public class ContactRestController {
 
         Response response = new Response("200", "Message saved successfully!");
         return ResponseEntity.status(HttpStatus.CREATED).header("isMsgSaved", "true").body(response);
+    }
+
+    @DeleteMapping("/deleteMsg")
+    public ResponseEntity<?> deleteMsg(RequestEntity<Contact> requestEntity) {
+        HttpHeaders headers = requestEntity.getHeaders();
+        headers.forEach((key, value) -> {
+            log.info(String.format("Header '%s' = %s", key, String.join("|", value)));
+        });
+
+        Contact contact = requestEntity.getBody();
+        if (contact != null) {
+            contactRepository.deleteById(contact.getContactId());
+        }
+
+        Response response = new Response("200", "Message deleted successfully!");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
