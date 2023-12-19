@@ -11,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 public class ContactService {
@@ -35,16 +33,7 @@ public class ContactService {
     }
 
     public boolean updateMsgStatus(int contactId) {
-        Optional<Contact> optionalContact = contactRepository.findById(contactId);
-
-        if (optionalContact.isPresent()) {
-            Contact contact = optionalContact.get();
-            contact.setStatus(EazySchoolConstansts.CLOSE);
-
-            Contact updatedContact = contactRepository.save(contact);
-            return updatedContact != null && updatedContact.getUpdatedBy() != null;
-        }
-
-        return false;
+        int rows = contactRepository.updateStatusById(EazySchoolConstansts.CLOSE, contactId);
+        return rows > 0;
     }
 }
